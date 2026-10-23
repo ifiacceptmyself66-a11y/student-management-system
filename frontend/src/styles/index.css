@@ -1,0 +1,128 @@
+/* 主题变量取自原型 student-management-prototype 的配色 */
+:root {
+  --ink: #172d25;
+  --muted: #7d8b82;
+  --line: #e7ebe4;
+  --paper: #ffffff;
+  --canvas: #f6f7f2;
+  --green: #247457;
+  --green-dark: #174f3c;
+  --mint: #e8f3eb;
+  --gold: #f1c979;
+  --rose: #f8e9e2;
+  --shadow: 0 14px 38px rgba(27, 57, 43, 0.07);
+
+  /* 覆盖 Element Plus 主色, 与原型保持一致 */
+  --el-color-primary: #247457;
+  --el-color-primary-light-3: #5a9280;
+  --el-color-primary-light-5: #91b3a6;
+  --el-color-primary-light-7: #bdd2c9;
+  --el-color-primary-light-8: #d3e0da;
+  --el-color-primary-light-9: #e8f3eb;
+  --el-color-primary-dark-2: #1d5d46;
+  --el-border-radius-base: 8px;
+  --el-font-family: Inter, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Inter, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 通用面板, 列表页复用 */
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.page-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.page-desc {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 列表页通用布局: 班级页与学生页共用 */
+.page {
+  display: grid;
+  gap: 20px;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbar-input {
+  width: 220px;
+}
+
+.toolbar-select {
+  width: 170px;
+}
+
+.toolbar-select-sm {
+  width: 120px;
+}
+
+.pager {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* 表格观感与原型保持一致 */
+.el-table {
+  --el-table-border-color: var(--line);
+  --el-table-header-text-color: #5d6f64;
+  --el-table-text-color: var(--ink);
+  --el-table-row-hover-bg-color: #f7faf5;
+}
+
+.el-table th.el-table__cell {
+  background: #f8faf6;
+  font-weight: 600;
+}

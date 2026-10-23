@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinghe.sms.mapper.StudentMapper">
+
+    <sql id="studentColumns">
+        s.id,
+        s.student_no,
+        s.name,
+        s.gender,
+        s.birth_date,
+        s.phone,
+        s.email,
+        s.guardian_name,
+        s.guardian_phone,
+        s.class_id,
+        s.status,
+        s.created_at,
+        s.updated_at,
+        c.class_name,
+        c.grade
+    </sql>
+
+    <select id="selectStudentPage" resultType="com.qinghe.sms.dto.StudentVO">
+        SELECT
+        <include refid="studentColumns"/>
+        FROM student s
+        LEFT JOIN class_info c ON c.id = s.class_id AND c.deleted = 0
+        WHERE s.deleted = 0
+        <if test="query.keyword != null and query.keyword != ''">
+            AND (s.name LIKE CONCAT('%', #{query.keyword}, '%')
+            OR s.student_no LIKE CONCAT('%', #{query.keyword}, '%'))
+        </if>
+        <if test="query.classId != null">
+            AND s.class_id = #{query.classId}
+        </if>
+        <if test="query.gender != null">
+            AND s.gender = #{query.gender}
+        </if>
+        <if test="query.status != null">
+            AND s.status = #{query.status}
+        </if>
+        ORDER BY s.student_no ASC
+    </select>
+
+    <select id="countGroupByClassIds" resultType="com.qinghe.sms.dto.ClassStudentCountVO">
+        SELECT class_id AS classId, COUNT(*) AS total
+        FROM student
+        WHERE deleted = 0
+        AND class_id IN
+        <foreach collection="classIds" item="classId" open="(" separator="," close=")">
+            #{classId}
+        </foreach>
+        GROUP BY class_id
+    </select>
+
+    <select id="countByClassId" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM student
+        WHERE deleted = 0
+        AND class_id = #{classId}
+    </select>
+
+</mapper>

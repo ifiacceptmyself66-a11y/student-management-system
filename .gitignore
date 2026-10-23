@@ -1,0 +1,32 @@
+# ---- Java / Maven ----
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+build/
+
+# ---- Node / 前端 ----
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# ---- IDE ----
+.idea/
+*.iml
+*.iws
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ---- 操作系统 ----
+.DS_Store
+Thumbs.db
+
+# ---- 日志 / 临时文件 ----
+*.log
+logs/
