@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 
+import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+
+const changePasswordVisible = ref(false)
 
 const menuItems = [
   { path: '/classes', label: '班级管理' },
@@ -20,6 +23,12 @@ const pageTitle = computed(() => (typeof route.meta.title === 'string' ? route.m
 async function handleLogout(): Promise<void> {
   await authStore.logout()
   ElMessage.success('已退出登录')
+  await router.replace({ name: 'login' })
+}
+
+/** 密码已修改: 主动退出并要求用新密码重新登录 */
+async function handlePasswordChanged(): Promise<void> {
+  await authStore.logout()
   await router.replace({ name: 'login' })
 }
 </script>
@@ -60,6 +69,7 @@ async function handleLogout(): Promise<void> {
         <div class="crumb">首页 / <b>{{ pageTitle }}</b></div>
         <div class="top-actions">
           <span class="role">{{ authStore.displayName }}</span>
+          <el-button text type="primary" @click="changePasswordVisible = true">修改密码</el-button>
           <el-button text type="primary" @click="handleLogout">退出登录</el-button>
         </div>
       </header>
@@ -68,6 +78,8 @@ async function handleLogout(): Promise<void> {
         <router-view />
       </main>
     </section>
+
+    <ChangePasswordDialog v-model="changePasswordVisible" @changed="handlePasswordChanged" />
   </div>
 </template>
 

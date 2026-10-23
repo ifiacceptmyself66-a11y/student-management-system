@@ -99,7 +99,7 @@ cd D:\CODE\backend
 $env:DB_URL="jdbc:mysql://localhost:3306/sms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true"
 $env:DB_USERNAME="sms_app"
 $env:DB_PASSWORD="<你的密码>"
-$env:JWT_SECRET="<至少 32 字节的随机字符串>"   # 不设置时会使用仅限开发的默认值
+$env:JWT_SECRET="<至少 32 位、建议 48 位的随机字符串>"   # 不设置或过短会直接启动失败
 
 mvn spring-boot:run
 ```

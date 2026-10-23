@@ -18,6 +18,11 @@ export interface LoginResult {
   admin: AdminInfo
 }
 
+export interface ChangePasswordPayload {
+  oldPassword: string
+  newPassword: string
+}
+
 export interface ClassItem {
   id: number
   className: string

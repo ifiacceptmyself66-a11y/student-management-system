@@ -19,6 +19,8 @@ public enum ResultCode {
     NOT_FOUND(2004, "数据不存在"),
     ACCOUNT_DISABLED(2005, "账号已被禁用"),
     DATA_CONFLICT(2006, "数据已存在，请检查唯一字段"),
+    OLD_PASSWORD_ERROR(2007, "原密码不正确"),
+    WEAK_PASSWORD(2008, "新密码过于简单，请更换"),
 
     SERVER_ERROR(5000, "服务器内部错误");
 

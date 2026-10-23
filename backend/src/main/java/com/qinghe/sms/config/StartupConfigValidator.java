@@ -26,6 +26,9 @@ public class StartupConfigValidator implements InitializingBean {
 
     private static final String DEFAULT_JWT_SECRET = "dev-only-sms-jwt-secret-please-override-in-production";
 
+    /** JJWT 要求 HMAC 密钥 >= 256 bits(32 字节), 否则构造 JwtUtil 时抛 WeakKeyException */
+    private static final int MIN_JWT_SECRET_LENGTH = 32;
+
     private final Environment environment;
 
     @Override
@@ -39,8 +42,12 @@ public class StartupConfigValidator implements InitializingBean {
         }
 
         String jwtSecret = environment.getProperty("JWT_SECRET");
-        if (!StringUtils.hasText(jwtSecret) || DEFAULT_JWT_SECRET.equals(jwtSecret)) {
-            log.warn("JWT_SECRET 未设置或仍为默认值, 仅适合本地开发; 生产环境必须覆盖");
+        if (!StringUtils.hasText(jwtSecret) || jwtSecret.length() < MIN_JWT_SECRET_LENGTH) {
+            throw new IllegalStateException("JWT_SECRET 缺失或过短: 至少需要 " + MIN_JWT_SECRET_LENGTH
+                    + " 个字符(HMAC 密钥 >= 256 bits), 建议用 48 位随机字符串");
+        }
+        if (DEFAULT_JWT_SECRET.equals(jwtSecret)) {
+            log.warn("JWT_SECRET 仍为代码中的默认开发值, 仅适合本地开发; 对局域网/生产开放前必须覆盖");
         }
     }
 }
